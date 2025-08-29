@@ -192,8 +192,7 @@
     }
     
     .logo {
-      height: 50px;
-      animation: logoFloat 3s ease-in-out infinite;
+      height: 80px;
       display: flex;
       align-items: center;
       text-decoration: none;
@@ -203,12 +202,6 @@
     
     .logo:hover {
       transform: scale(1.05);
-      animation-play-state: paused;
-    }
-    
-    @keyframes logoFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
     }
     
     .logo img {
@@ -257,6 +250,7 @@
       background: linear-gradient(135deg, var(--beige) 0%, #e8f5e9 100%);
       position: relative;
       overflow: hidden;
+      min-height: 600px;
     }
     
     .hero::before {
@@ -272,19 +266,6 @@
       animation: float 20s infinite ease-in-out;
     }
     
-    .hero::after {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, var(--primary-green) 0%, transparent 70%);
-      opacity: 0.3;
-      border-radius: 50%;
-      bottom: -150px;
-      left: -150px;
-      animation: float 25s infinite ease-in-out reverse;
-    }
-    
     @keyframes float {
       0%, 100% { transform: translateY(0) translateX(0); }
       25% { transform: translateY(-30px) translateX(20px); }
@@ -293,17 +274,93 @@
     }
     
     .hero-content {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      text-align: center;
       position: relative;
       z-index: 1;
     }
     
-    .hero-text {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      min-height: 500px;
+    }
+    
+    .hero-left {
+      padding: 0 2rem;
+    }
+    
+    .hero-right {
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .slide.active {
+      opacity: 1;
+    }
+    
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+    
+    .dot {
+      width: 12px;
+      height: 12px;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .dot.active {
+      background-color: white;
+    }
+    
+    @media (max-width: 968px) {
+      .hero-split {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .hero-left {
+        text-align: center;
+        padding: 0 1rem;
+      }
+      
+      .hero-right {
+        height: 300px;
+      }
     }
     
     .typed-title {
@@ -1330,20 +1387,40 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-text">
-        <h1 class="typed-title">
-          Transformamos tus residuos en recursos<br>
-          a través de
-        </h1>
-        <h2 class="typed-subtitle">
-          <span id="typed-palabra"></span>.
-        </h2>
-        <p>Especialistas en residuos peligrosos y de manejo especial. Impulsamos Zero Waste to Landfill con soluciones logísticas inteligentes.</p>
-        <div class="hero-buttons">
-          <a href="https://wa.me/528110207006" class="primary-button">
-            ♻️ Auditoría Gratuita
-          </a>
-          <a href="#servicios" class="secondary-button">Ver Servicios</a>
+      <div class="hero-split">
+        <div class="hero-left">
+          <h1 class="typed-title">
+            Transformamos tus residuos en recursos<br>
+            a través de
+          </h1>
+          <h2 class="typed-subtitle">
+            <span id="typed-palabra"></span>.
+          </h2>
+          <p>Especialistas en residuos peligrosos y de manejo especial. Impulsamos Zero Waste to Landfill con soluciones logísticas inteligentes.</p>
+          <div class="hero-buttons">
+            <a href="https://wa.me/528110207006" class="primary-button">
+              ♻️ Auditoría Gratuita
+            </a>
+            <a href="#servicios" class="secondary-button">Ver Servicios</a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="slider-container">
+            <div class="slide active">
+              <img src="imagen-reciclaje-1.jpg" alt="Gestión integral de residuos peligrosos" />
+            </div>
+            <div class="slide">
+              <img src="imagen-reciclaje-2.jpg" alt="Reciclaje y valorización industrial" />
+            </div>
+            <div class="slide">
+              <img src="imagen-reciclaje-3.jpg" alt="Atención de emergencias ambientales" />
+            </div>
+          </div>
+          <div class="slider-dots">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -1789,6 +1866,43 @@
         showCursor: true,
         cursorChar: '|'
       });
+    });
+    
+    // Slider functionality
+    let currentSlideIndex = 1;
+    let slideInterval;
+    
+    function showSlide(n) {
+      let slides = document.querySelectorAll('.slide');
+      let dots = document.querySelectorAll('.dot');
+      
+      if (n > slides.length) currentSlideIndex = 1;
+      if (n < 1) currentSlideIndex = slides.length;
+      
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      slides[currentSlideIndex - 1].classList.add('active');
+      dots[currentSlideIndex - 1].classList.add('active');
+    }
+    
+    function currentSlide(n) {
+      clearInterval(slideInterval);
+      showSlide(currentSlideIndex = n);
+      startSlideshow();
+    }
+    
+    function nextSlide() {
+      showSlide(++currentSlideIndex);
+    }
+    
+    function startSlideshow() {
+      slideInterval = setInterval(nextSlide, 5000); // Cambiar cada 5 segundos
+    }
+    
+    // Iniciar el slider cuando la página carga
+    document.addEventListener('DOMContentLoaded', function() {
+      startSlideshow();
     });
   </script>
 </body>
